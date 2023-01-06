@@ -3,10 +3,17 @@
   margin: 0;
   padding: 0;
 }
-$openSans: 'Open Sans', Helvetica, Arial, sans-serif;
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('fonts/OpenSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   background: #15181A;
-  font-family: $openSans;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 .skw-pages {
@@ -15,142 +22,143 @@ body {
   height: 100vh;
 }
 
-$skewDeg: 18deg;
-$magicVH: 32.4vh; // this number is magic and depends on skew angle
-$scrollTime: 1s;
-
 .skw-page {
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
+}
 
-  &__half {
-    position: absolute;
-    top: 0;
-    width: 50%;
-    height: 100vh;
-    transition: transform $scrollTime;
+.skw-page__half {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100vh;
+  transition: transform 1s;
+}
 
-    &--left {
-      left: 0;
-      transform: translate3d(-$magicVH, 100%, 0);
-        }
+.skw-page__half--left {
+  left: 0;
+  transform: translate3d(-32.4vh, 100%, 0);
+}
 
-    &--right {
-      left: 50%;
-      transform: translate3d($magicVH, -100%, 0);
-    }
+.skw-page__half--right {
+  left: 50%;
+  transform: translate3d(32.4vh, -100%, 0);
+}
 
-    .skw-page.active & {
-      transform: translate3d(0,0,0);
-    }
-  }
+.skw-page.active .skw-page__half {
+  transform: translate3d(0,0,0);
+}
 
-  &__skewed {
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    width: 140%;
-    height: 100%;
-    transform: skewX($skewDeg * -1);
-    background: #000;
+.skw-page__skewed {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 140%;
+  height: 100%;
+  transform: skewX(-18deg);
+  background: #000;
+}
 
-    .skw-page__half--left & {
-      left: -40%;
-    }
-    .skw-page__half--right & {
-      right: -40%;
-    }
-  }
+.skw-page__half--left .skw-page__skewed {
+  left: -40%;
+}
 
-  &__content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-flow: column wrap;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    padding: 0 30%;
-    color: #fff;
-    transform: skewX($skewDeg);
-    transition: transform $scrollTime, opacity $scrollTime;
-    background-size: cover;
+.skw-page__half--right .skw-page__skewed {
+  right: -40%;
+}
 
-    .skw-page__half--left & {
-      padding-left: 30%;
-      padding-right: 30%;
-      transform-origin: 100% 0;
-    }
-    .skw-page__half--right & {
-      padding-left: 30%;
-      padding-right: 30%;
-      transform-origin: 0 100%;
-    }
+.skw-page__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column wrap;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 30%;
+  color: #fff;
+  transform: skewX(18deg);
+  transition: transform 1s, opacity 1s;
+  background-size: cover;
+}
 
-    .skw-page.inactive & {
-      opacity: 0.5;
-      transform: skewX($skewDeg) scale(0.95);
-    }
-  }
+.skw-page__half--left .skw-page__content {
+  padding-left: 30%;
+  padding-right: 30%;
+  transform-origin: 100% 0;
+}
 
-  &__heading {
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    font-size: 25px;
-    text-align: center;
-  }
+.skw-page__half--right .skw-page__content {
+  padding-left: 30%;
+  padding-right: 30%;
+  transform-origin: 0 100%;
+}
 
-  &__description {
-    font-size: 18px;
-    text-align: center;
-  }
-  
-  &__link {
-    color: #FFA0A0;
-  }
+.skw-page.inactive .skw-page__content {
+  opacity: 0.5;
+  transform: skewX(18deg) scale(0.95);
+}
 
-  &-1 {
-    .skw-page__half--left .skw-page__content {
-      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/mousover-img-1.jpg');
-    }
-    .skw-page__half--right .skw-page__content {
-      background: lighten(#1C1C1C, 5%);
-    }
-  }
-  &-2 {
-    .skw-page__half--left .skw-page__content {
-      background: lighten(#1C1C1C, 5%);
-    }
-    .skw-page__half--right .skw-page__content {
-      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/slider-2.jpg');
-    }
-  }
-  &-3 {
-    .skw-page__half--left .skw-page__content {
-      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/mousover-img-2.jpg');
-    }
-    .skw-page__half--right .skw-page__content {
-      background: lighten(#1C1C1C, 5%);
-    }
-  }
-  &-4 {
-    .skw-page__half--left .skw-page__content {
-      background: lighten(#1C1C1C, 5%);
-    }
-    .skw-page__half--right .skw-page__content {
-      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-3.jpg');
-    }
-  }
-  &-5 {
-    .skw-page__half--left .skw-page__content {
-      background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/img-test.jpg');
-    }
-    .skw-page__half--right .skw-page__content {
-      background: lighten(#1C1C1C, 5%);
-    }
-  }
+.skw-page__heading {
+  margin-bottom: 15px;
+  text-transform: uppercase
+.skw-page__description {
+  font-size: 18px;
+  text-align: center;
+}
+
+.skw-page__link {
+  color: #FFA0A0;
+}
+
+.skw-page-1 .skw-page__half--left .skw-page__content {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/mousover-img-1.jpg');
+}
+
+.skw-page-1 .skw-page__half--right .skw-page__content {
+  background: lighten(#1C1C1C, 5%);
+}
+
+.skw-page-2 .skw-page__half--left .skw-page__content {
+  background: lighten(#1C1C1C, 5%);
+}
+
+.skw-page-2 .skw-page__half--right .skw-page__content {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/slider-2.jpg');
+}
+
+.skw-page-3 .skw-page__half--left .skw-page__content {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/slider-3.jpg');
+}
+
+.skw-page-3 .skw-page__half--right .skw-page__content {
+  background: lighten(#1C1C1C, 5%);
+}
+
+.skw-page-4 .skw-page__half--left .skw-page__content {
+  background: lighten(#1C1C1C, 5%);
+}
+
+.skw-page-4 .skw-page__half--right .skw-page__content {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/slider-4.jpg');
+}
+
+.skw-page-5 .skw-page__half--left .skw-page__content {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/slider-5.jpg');
+}
+
+.skw-page-5 .skw-page__half--right .skw-page__content {
+  background: lighten(#1C1C1C, 5%);
+}
+
+.skw-page-6 .skw-page__half--left .skw-page__content {
+  background: lighten(#1C1C1C, 5%);
+}
+
+.skw-page-6 .skw-page__half--right .skw-page__content {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/slider-6.jpg');
 }
